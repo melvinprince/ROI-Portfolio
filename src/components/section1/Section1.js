@@ -1,7 +1,7 @@
 // pages/index.js
 import Astronaut3D from "@/components/section1/Astronaut3D";
 import StarCanvas from "@/components/StarCanvas"; // your previously defined star canvas component
-import { Avatar } from "../Astronaut";
+import { Avatar } from "./Astronaut";
 
 export default function Home() {
   return (
