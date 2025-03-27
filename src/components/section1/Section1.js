@@ -1,33 +1,28 @@
-// pages/index.js
-import Astronaut3D from "@/components/section1/Astronaut3D";
-import StarCanvas from "@/components/StarCanvas"; // your previously defined star canvas component
-import { Avatar } from "./Astronaut";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import Astronaut3D from "./Astronaut3D";
+import StarCanvas from "../StarCanvas";
+import Loader from "@/app/Loader";
+import Section1Text from "./Section1Text";
+
+export default function Section1() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleLoaded = () => {
+    setIsLoaded(true);
+  };
+
   return (
-    <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
-      {/* Background stars */}
+    <div className="relative h-screen overflow-hidden mx-[10rem]">
       <StarCanvas />
 
-      {/* First section */}
-      <section style={{ position: "relative", height: "100vh" }}>
-        {/* Interactive 3D Astronaut */}
-
+      <section className="relative h-screen flex justify-around items-center">
+        <Section1Text isLoaded={isLoaded} />
         <Astronaut3D />
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            color: "white",
-            padding: "2rem",
-          }}
-        >
-          <h1>Welcome to the 3D Experience</h1>
-          <p>Explore the stars with our interactive astronaut.</p>
-        </div>
       </section>
-      {/* Additional sections go here */}
+
+      {!isLoaded && <Loader onLoaded={handleLoaded} />}
     </div>
   );
 }

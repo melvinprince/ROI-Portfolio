@@ -11,10 +11,13 @@
   "dependencies": {
     "@react-three/drei": "^10.0.5",
     "@react-three/fiber": "^9.1.0",
+    "gsap": "^3.12.7",
+    "howler": "^2.2.4",
     "lottie-react": "^2.4.1",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tone": "^15.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

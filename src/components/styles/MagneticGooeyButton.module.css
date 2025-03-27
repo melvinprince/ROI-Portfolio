@@ -1,0 +1,70 @@
+.svgContainer {
+  /* Hide the SVG filter definition */
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.button {
+  /* Basic Button Styling */
+  --button-bg: #2b09eb; /* Example background color */
+  --button-text-color: #ffffff;
+  --button-padding-y: 1rem;
+  --button-padding-x: 2rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--button-text-color);
+  text-align: center;
+
+  /* Apply the SVG filter for the gooey effect */
+  filter: url(#goo);
+
+  margin: 15px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bg,
+.text {
+  display: inline-block;
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: 50px;
+  /* Only transition the background-color and text color */
+  transition: background-color 5s, color 5s;
+  will-change: transform;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--button-bg);
+  z-index: 1;
+}
+
+.text {
+  position: relative;
+  z-index: 2;
+  font-size: 2rem;
+  background-color: var(--button-bg);
+}
+
+.button:hover .bg,
+.button:hover .text {
+  background-color: aqua;
+  color: black;
+}
