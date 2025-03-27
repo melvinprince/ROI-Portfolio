@@ -8,7 +8,7 @@ import { Astronaut } from "./Astronaut";
 export default function Astronaut3D() {
   return (
     <Canvas
-      className="absolute right-[20px] top-[50%] translate-y-[-50%] max-w-[40vw] h-[100vh] z-[2] mx-auto"
+      className="relative top-[50%] translate-y-[-50%] z-[2] mx-auto"
       camera={{ position: [0, -10, 5], fov: 50 }}
     >
       {/* Lighting */}

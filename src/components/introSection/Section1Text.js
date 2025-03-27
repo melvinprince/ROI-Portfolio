@@ -6,7 +6,7 @@ import MagneticGooeyButton from "../MagneticGooeyButton";
 export default function Section1Text({ isLoaded }) {
   return (
     <div
-      className={`relative z-10 text-white p-8 transition-opacity duration-300 ease-in-out flex flex-col justify-center items-center pl-[15rem] ${
+      className={`relative z-10 text-white p-8 transition-opacity duration-300 ease-in-out flex flex-col justify-start items-start pl-[15rem]${
         isLoaded ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -18,11 +18,11 @@ export default function Section1Text({ isLoaded }) {
           className="object-contain"
         />
       </div>
-      <hi className="text-[4rem]">
+      <h1 className="text-[4rem]">
         <ScrambleTextOnHover text="Delivering Success through Innovations" />
-      </hi>
+      </h1>
 
-      <p className="self-center mt-4 text-[2rem] w-[70%] text-center pt-[3rem]">
+      <p className=" text-[2rem] w-[70%] pt-[3rem]">
         At Royal Orbit Innovations, we merge cutting-edge technology with
         creative vision to transform your business landscape. Our team is
         dedicated to crafting solutions that empower growth, spark change, and

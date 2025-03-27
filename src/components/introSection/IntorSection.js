@@ -6,7 +6,7 @@ import StarCanvas from "../StarCanvas";
 import Loader from "@/app/Loader";
 import Section1Text from "./Section1Text";
 
-export default function Section1() {
+export default function IntroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleLoaded = () => {
@@ -14,15 +14,15 @@ export default function Section1() {
   };
 
   return (
-    <div className="relative h-screen overflow-hidden mx-[10rem]">
+    <div className="relative h-[100vh] overflow-hidden px-[15rem]">
       <StarCanvas />
 
-      <section className="relative h-screen flex justify-around items-center">
+      <section className="relative h-full flex justify-around items-center">
         <Section1Text isLoaded={isLoaded} />
-        <Astronaut3D />
+        {/* <Astronaut3D /> */}
       </section>
 
-      {!isLoaded && <Loader onLoaded={handleLoaded} />}
+      {/* {!isLoaded && <Loader onLoaded={handleLoaded} />} */}
     </div>
   );
 }

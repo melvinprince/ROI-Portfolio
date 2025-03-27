@@ -1,9 +1,11 @@
-import Section1 from "@/components/section1/Section1";
+import IntroSection from "@/components/introSection/IntorSection";
+import Services from "@/components/services/Services";
 
 export default function Home() {
   return (
     <div>
-      <Section1 />
+      <IntroSection />
+      <Services />
     </div>
   );
 }
