@@ -24,15 +24,12 @@ const StarCanvas = () => {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       radius: Math.random() * 1.5 + 0.5,
-      // Random initial opacity for twinkling effect.
       opacity: Math.random(),
-      // Speed at which the star twinkles.
       twinkleSpeed: Math.random() * 0.02 + 0.005,
-      // Determine if opacity is increasing (true) or decreasing (false).
       increasing: Math.random() < 0.5,
     }));
 
-    // Shooting star setup: create and manage shooting stars.
+    // Shooting star setup.
     let shootingStars = [];
     const createShootingStar = () => {
       const startX = Math.random() * canvas.width;
@@ -40,13 +37,9 @@ const StarCanvas = () => {
       return {
         x: startX,
         y: startY,
-        // The length of the shooting star's trail.
         length: Math.random() * 80 + 50,
-        // Speed of the shooting star.
         speed: Math.random() * 15 + 10,
-        // Angle for the shooting star (45° for a diagonal effect).
-        angle: Math.PI / 4,
-        // Opacity for fading out.
+        angle: Math.PI / 4, // 45° diagonal
         opacity: 1,
       };
     };
@@ -70,7 +63,7 @@ const StarCanvas = () => {
       });
     };
 
-    // Update shooting stars: move them and fade them out.
+    // Update shooting stars: move and fade out.
     const updateShootingStars = () => {
       for (let i = shootingStars.length - 1; i >= 0; i--) {
         let s = shootingStars[i];
@@ -81,8 +74,8 @@ const StarCanvas = () => {
           shootingStars.splice(i, 1);
         }
       }
-      // Randomly add a shooting star (if none exists) with a low probability.
-      if (shootingStars.length < 1 && Math.random() < 5) {
+      // Add a new shooting star with low probability if none exist.
+      if (shootingStars.length < 1 && Math.random() < 0.005) {
         shootingStars.push(createShootingStar());
       }
     };
@@ -102,7 +95,6 @@ const StarCanvas = () => {
       // Draw shooting stars.
       shootingStars.forEach((s) => {
         ctx.beginPath();
-        // The shooting star trail: draw a line backwards from the current position.
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(
           s.x - s.length * Math.cos(s.angle),
@@ -114,18 +106,48 @@ const StarCanvas = () => {
       });
     };
 
+    // Animation control variables.
+    let animationId;
+    let isInView = false;
+
     // The animation loop.
     const animate = () => {
       updateStars();
       updateShootingStars();
       drawStars();
-      requestAnimationFrame(animate);
+      if (isInView) {
+        animationId = requestAnimationFrame(animate);
+      }
     };
 
-    animate();
+    // Intersection Observer to check if the canvas is in view.
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!isInView) {
+            isInView = true;
+            animate();
+          }
+        } else {
+          isInView = false;
+          if (animationId) {
+            cancelAnimationFrame(animationId);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+    });
+    observer.observe(canvas);
 
     return () => {
       window.removeEventListener("resize", setCanvasSize);
+      observer.disconnect();
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
   }, []);
 
