@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import styles from "./styles/MagneticGooeyButton.module.css"; // Import CSS module
 
-const MagneticGooeyButton = ({ text = "Click Me" }) => {
+const MagneticGooeyButton = ({ text, textSize }) => {
   const buttonRef = useRef(null);
   const bgRef = useRef(null);
   const textRef = useRef(null);
@@ -104,7 +104,10 @@ const MagneticGooeyButton = ({ text = "Click Me" }) => {
 
       <button ref={buttonRef} className={styles.button}>
         <span ref={bgRef} className={styles.bg}></span>
-        <span ref={textRef} className={styles.text}>
+        <span
+          ref={textRef}
+          className={`${styles.text} ${textSize ? `text-[${textSize}]` : ""}`}
+        >
           {text}
         </span>
       </button>

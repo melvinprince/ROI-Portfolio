@@ -31,7 +31,7 @@ function NormalImageCarousel({ images, play }) {
             src={src}
             alt={`Carousel image ${index}`}
             fill
-            className="object-cover hover:scale-110 transition-all duration-300"
+            className="object-contain"
           />
         </div>
       ))}

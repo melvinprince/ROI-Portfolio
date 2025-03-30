@@ -19,10 +19,10 @@ export default function IntroSection() {
 
       <section className="relative h-full flex justify-around items-center">
         <Section1Text isLoaded={isLoaded} />
-        {/* <Astronaut3D /> */}
+        <Astronaut3D />
       </section>
 
-      {/* {!isLoaded && <Loader onLoaded={handleLoaded} />} */}
+      {!isLoaded && <Loader onLoaded={handleLoaded} />}
     </div>
   );
 }

@@ -1,24 +1,29 @@
-import NomralImageCarousel from "../NomralImageCarousel";
+import MagneticGooeyButton from "../MagneticGooeyButton";
+import ScrambleTextOnHover from "../ScramblerTextOnHover";
 import StarCanvas from "../StarCanvas";
+import MediaCarousel from "./MediaCarousel";
 
 export default function MediaSection() {
   return (
     <div className="relative h-[100vh] overflow-hidden">
       <StarCanvas />
-      <section className="h-[100vh] px-[15rem] pt-[10rem] text-white grid grid-cols-2 items-center">
+      <section className="h-[100vh] px-[15rem] pt-[10rem] text-white grid grid-cols-2 items-center gap-[5rem]">
         <div>
-          <h2 className="text-[4rem]">Media Section</h2>
-
-          <p className="text-[2rem]">
-            Laboris elit duis dolore anim mollit cillum nostrud qui incididunt
-            irure nisi. Enim sunt aliquip excepteur id dolore fugiat magna
-            laboris duis eu. Do do ea nostrud eiusmod officia labore. Nisi est
-            mollit incididunt elit ipsum est aute ut incididunt minim pariatur
-            ullamco adipisicing amet. Eu voluptate culpa nostrud ex enim aliqua
-            occaecat tempor est labore.
+          <h2 className="text-[4rem] pb-[4rem]">
+            <ScrambleTextOnHover text="Media Production" />
+          </h2>
+          <p className="text-[2rem] pb-[2rem]">
+            Excepteur nostrud et incididunt id proident ad dolore elit commodo
+            culpa dolore veniam. Anim commodo et nostrud sit. Laboris minim
+            deserunt ea culpa ex consectetur est do adipisicing enim quis. Amet
+            magna ex culpa elit reprehenderit irure dolore enim anim fugiat
+            exercitation pariatur. Id cillum et deserunt do elit non eiusmod.
           </p>
+          <MagneticGooeyButton text="Contact Us" />
         </div>
-        <div>{/* <div><NomralImageCarousel /></div> */}</div>
+        <div>
+          <MediaCarousel />
+        </div>
       </section>
     </div>
   );

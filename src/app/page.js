@@ -12,7 +12,7 @@ import WebDevSection from "@/components/webDev/WebDevSection";
 
 export default function Home() {
   return (
-    <div>
+    <div className="snap-y snap-mandatory h-screen overflow-y-scroll">
       <IntroSection />
       <Services />
       <MediaSection />

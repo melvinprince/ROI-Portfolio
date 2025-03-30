@@ -86,3 +86,7 @@ body {
     scroll-behavior: auto !important;
   }
 }
+section {
+  scroll-snap-align: start;
+  height: 100vh;
+}
