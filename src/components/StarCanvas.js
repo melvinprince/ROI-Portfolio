@@ -75,7 +75,7 @@ const StarCanvas = () => {
         }
       }
       // Add a new shooting star with low probability if none exist.
-      if (shootingStars.length < 1 && Math.random() < 0.005) {
+      if (shootingStars.length < 1 && Math.random() < 0.05) {
         shootingStars.push(createShootingStar());
       }
     };

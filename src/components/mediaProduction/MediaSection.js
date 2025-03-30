@@ -1,4 +1,4 @@
-import PDFViewer from "../PDFViewer";
+import NomralImageCarousel from "../NomralImageCarousel";
 import StarCanvas from "../StarCanvas";
 
 export default function MediaSection() {
@@ -18,11 +18,7 @@ export default function MediaSection() {
             occaecat tempor est labore.
           </p>
         </div>
-        <div>
-          <div>
-            <PDFViewer pdfUrl="/pdf/Ace_One_Marine_Guideline_2022.pdf" />
-          </div>
-        </div>
+        <div>{/* <div><NomralImageCarousel /></div> */}</div>
       </section>
     </div>
   );
