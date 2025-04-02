@@ -2,47 +2,47 @@ const services = [
   {
     name: "Media Production",
     link: "",
-    icon: "/svg/media.svg",
+    image: "/images/services/media_adjusted.webp",
   },
   {
     name: "Digital Marketing",
     link: "",
-    icon: "/svg/digital.svg",
+    image: "/images/services/digital_adjusted.webp",
   },
   {
     name: "Branding",
     link: "",
-    icon: "",
+    image: "/images/services/branding_adjusted.webp",
   },
   {
     name: "Printing",
     link: "",
-    icon: "",
+    image: "/images/services/printing_adjusted.webp",
   },
   {
     name: "Web Development",
     link: "",
-    icon: "",
+    image: "/images/services/webDev_adjusted.webp",
   },
   {
     name: "App Development",
     link: "",
-    icon: "",
+    image: "/images/services/appDev_adjusted.webp",
   },
   {
     name: "Strategic Marketing",
     link: "",
-    icon: "",
+    image: "/images/services/marketing_adjusted.webp",
   },
   {
     name: "Grpahic Designing",
     link: "",
-    icon: "",
+    image: "/images/services/graphic_adjusted.webp",
   },
   {
-    name: "Indoor/Outdoor Advertising",
+    name: "Indoor & Outdoor Advertising",
     link: "",
-    icon: "",
+    image: "/images/services/advertising_adjusted.webp",
   },
 ];
 

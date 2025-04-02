@@ -3,9 +3,9 @@ import ServciesContent from "./ServciesContent";
 
 export default function Services() {
   return (
-    <div className="relative h-[100vh] overflow-hidden">
+    <div className="relative h-fit py-[15rem] ">
       <StarCanvas />
-      <section className="h-[100vh] px-[15rem] pt-[10rem]">
+      <section className="h-auto px-[15rem]">
         <ServciesContent />
       </section>
     </div>
