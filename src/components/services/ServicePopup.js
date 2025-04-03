@@ -2,9 +2,12 @@
 
 import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
+import VerticalImageCarousel from "../VerticalImageCarousel";
 
-export default function ServicePopup({ service, onClose }) {
+export default function ServicePopup({ service, onClose, image }) {
   const popupRef = useRef(null);
+  console.log("Service", service);
+  console.log("Image", image);
 
   // Animate popup on mount
   useLayoutEffect(() => {
@@ -37,7 +40,7 @@ export default function ServicePopup({ service, onClose }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
       <div
         ref={popupRef}
-        className="relative flex h-4/5 w-4/5 flex-col items-center justify-center rounded-2xl bg-[#008080] p-8"
+        className="relative flex h-fit w-4/5 flex-col items-center justify-center rounded-2xl bg-[#008080] p-8"
       >
         <button
           onClick={handleClose}
@@ -45,7 +48,26 @@ export default function ServicePopup({ service, onClose }) {
         >
           Close
         </button>
-        <h1 className="text-3xl font-bold text-center">{service}</h1>
+        <h1 className="text-[3rem] pb-[2rem] font-bold text-center">
+          {service}
+        </h1>
+        <div className="grid grid-cols-3 items-center justify-center gap-[5rem] border border-white/20 rounded-[2rem] p-8">
+          <VerticalImageCarousel
+            images={[image, image, image]}
+            direction="up"
+            interval={2000}
+          />
+          <VerticalImageCarousel
+            images={[image, image, image]}
+            direction="down"
+            interval={2500}
+          />
+          <VerticalImageCarousel
+            images={[image, image, image]}
+            direction="up"
+            interval={1500}
+          />
+        </div>
       </div>
     </div>
   );

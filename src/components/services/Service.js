@@ -191,7 +191,11 @@ export default function Service({ service }) {
 
       {/* Conditionally render the popup */}
       {popupOpen && (
-        <ServicePopup service={service.name} onClose={closePopup} />
+        <ServicePopup
+          service={service.name}
+          image={service.image}
+          onClose={closePopup}
+        />
       )}
     </>
   );
