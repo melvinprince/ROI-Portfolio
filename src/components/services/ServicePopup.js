@@ -4,10 +4,16 @@ import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import VerticalImageCarousel from "../VerticalImageCarousel";
 
-export default function ServicePopup({ service, onClose, image }) {
+export default function ServicePopup({ service, onClose, images }) {
   const popupRef = useRef(null);
   console.log("Service", service);
-  console.log("Image", image);
+
+  // Calculate how many images per carousel.
+  const total = images.length;
+  const chunkSize = Math.ceil(total / 3);
+  const carousel1Images = images.slice(0, chunkSize);
+  const carousel2Images = images.slice(chunkSize, chunkSize * 2);
+  const carousel3Images = images.slice(chunkSize * 2);
 
   // Animate popup on mount
   useLayoutEffect(() => {
@@ -53,17 +59,17 @@ export default function ServicePopup({ service, onClose, image }) {
         </h1>
         <div className="grid grid-cols-3 items-center justify-center gap-[5rem] border border-white/20 rounded-[2rem] p-8">
           <VerticalImageCarousel
-            images={[image, image, image]}
+            images={carousel1Images}
             direction="up"
             interval={2000}
           />
           <VerticalImageCarousel
-            images={[image, image, image]}
+            images={carousel2Images}
             direction="down"
             interval={2500}
           />
           <VerticalImageCarousel
-            images={[image, image, image]}
+            images={carousel3Images}
             direction="up"
             interval={1500}
           />

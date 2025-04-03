@@ -193,7 +193,7 @@ export default function Service({ service }) {
       {popupOpen && (
         <ServicePopup
           service={service.name}
-          image={service.image}
+          images={service.images}
           onClose={closePopup}
         />
       )}
