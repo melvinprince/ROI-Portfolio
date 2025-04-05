@@ -5,10 +5,9 @@ import { gsap } from "gsap";
 const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const overlayRef = useRef(null);
 
-  // Number of vertical slices to create a waveform effect
+  // Number of vertical slices to create a waveform effect mask
   const slicesCount = 10;
 
   // Helper function to determine the next or previous index
@@ -21,47 +20,60 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
     return currentIndex;
   };
 
-  const handleTransition = (direction = "next") => {
+  // Preload the next image to ensure smooth transition
+  const preloadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image();
+      img.src = src;
+      img.onload = resolve;
+      img.onerror = reject;
+    });
+  };
+
+  const handleTransition = async (direction = "next") => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    // Reset load state for the upcoming image
-    setIsLoaded(false);
-
     const nextIndex = getIndex(direction);
+
+    // Preload the next image first
+    try {
+      await preloadImage(images[nextIndex]);
+    } catch (e) {
+      console.error("Failed to preload image", e);
+      setIsTransitioning(false);
+      return;
+    }
+
+    // Immediately update the main image to the next image
+    setCurrentIndex(nextIndex);
+
+    // Get the overlay container for the waveform mask
     const overlay = overlayRef.current;
     if (!overlay) return;
-
-    // Clear any previous overlay content
     overlay.innerHTML = "";
 
-    // Calculate slice width
     const sliceWidth = width / slicesCount;
     const slices = [];
 
-    // Create slices that will reveal the next image
+    // Create mask slices that fully cover the image initially
     for (let i = 0; i < slicesCount; i++) {
       const slice = document.createElement("div");
       slice.style.position = "absolute";
       slice.style.top = "0";
       slice.style.left = `${i * sliceWidth}px`;
       slice.style.width = `${sliceWidth}px`;
-      // Start with zero height so they aren’t visible
-      slice.style.height = "0px";
-      slice.style.overflow = "hidden";
-      // Use the next image as the background
-      slice.style.backgroundImage = `url(${images[nextIndex]})`;
-      slice.style.backgroundSize = `${width}px ${height}px`;
-      slice.style.backgroundPosition = `-${i * sliceWidth}px 0`;
+      slice.style.height = `${height}px`; // full cover
+      // Use a solid background color (or match your container) as a mask
+      slice.style.backgroundColor = "#fff";
+      slice.style.willChange = "height";
       overlay.appendChild(slice);
       slices.push(slice);
     }
 
-    // Create a GSAP timeline to animate slices into view with a wave-like stagger
+    // Animate the slices so they collapse (height to 0) revealing the main image
     const tl = gsap.timeline({
       onComplete: () => {
-        // Update the current image once animation completes
-        setCurrentIndex(nextIndex);
-        // Clean up overlay to avoid flicker
+        // Remove the overlay after animation completes
         overlay.innerHTML = "";
         setIsTransitioning(false);
       },
@@ -69,7 +81,7 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
 
     tl.to(slices, {
       duration: 0.8,
-      height: height, // Expand each slice to full container height
+      height: 0,
       ease: "power3.out",
       stagger: {
         each: 0.1,
@@ -82,16 +94,15 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
     <div className="flex flex-col items-center w-full h-full">
       {/* Image container */}
       <div className="relative" style={{ width, height }}>
-        {/* Display current image */}
+        {/* Main image, updated immediately on transition */}
         <Image
           src={images[currentIndex]}
           alt="Carousel Image"
           layout="fill"
           objectFit="cover"
           priority
-          onLoad={() => setIsLoaded(true)}
         />
-        {/* Overlay for waveform slices */}
+        {/* Overlay container for waveform mask slices */}
         <div
           ref={overlayRef}
           className="absolute top-0 left-0 w-full h-full pointer-events-none"
@@ -102,21 +113,21 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
       <div className="mt-4 flex gap-4">
         <button
           onClick={() => handleTransition("prev")}
-          disabled={!isLoaded || isTransitioning}
+          disabled={isTransitioning}
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >
           Prev
         </button>
         <button
           onClick={() => handleTransition("next")}
-          disabled={!isLoaded || isTransitioning}
+          disabled={isTransitioning}
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >
           Next
         </button>
       </div>
 
-      {/* Global CSS override to remove unwanted image transitions */}
+      {/* Global CSS override to prevent any unwanted transitions */}
       <style jsx global>{`
         img {
           transition: none !important;
