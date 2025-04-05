@@ -194,6 +194,7 @@ export default function Service({ service }) {
         <ServicePopup
           service={service.name}
           images={service.images}
+          type={service.type}
           onClose={closePopup}
         />
       )}

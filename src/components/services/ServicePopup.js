@@ -3,8 +3,13 @@
 import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import VerticalImageCarousel from "../VerticalImageCarousel";
+import AnimatedImageCarousel from "../imageCarouselComponent/AnimatedImageCarousel";
+import ImageCarousel from "../ImageCarousel";
+import TriangularCascadeCarousel from "../ImageCarousel";
+import CubeFlipCarousel from "../carousels/CubeFlipCarousel";
+import WaveformUnveilCarousel from "../carousels/WaveformUnveilCarousel";
 
-export default function ServicePopup({ service, onClose, images }) {
+export default function ServicePopup({ service, onClose, images, type }) {
   const popupRef = useRef(null);
   console.log("Service", service);
 
@@ -46,7 +51,7 @@ export default function ServicePopup({ service, onClose, images }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
       <div
         ref={popupRef}
-        className="relative flex h-fit w-4/5 flex-col items-center justify-center rounded-2xl bg-[#008080] p-8"
+        className="relative flex h-fit w-[80vw] flex-col items-center justify-center rounded-2xl bg-[#008080] p-8"
       >
         <button
           onClick={handleClose}
@@ -57,23 +62,35 @@ export default function ServicePopup({ service, onClose, images }) {
         <h1 className="text-[3rem] pb-[2rem] font-bold text-center">
           {service}
         </h1>
-        <div className="grid grid-cols-3 items-center justify-center gap-[5rem] border border-white/20 rounded-[2rem] p-8">
-          <VerticalImageCarousel
-            images={carousel1Images}
-            direction="up"
-            interval={2000}
-          />
-          <VerticalImageCarousel
-            images={carousel2Images}
-            direction="down"
-            interval={2500}
-          />
-          <VerticalImageCarousel
-            images={carousel3Images}
-            direction="up"
-            interval={1500}
-          />
-        </div>
+        {type === "ac" && (
+          <div className="max-w-4xl mx-auto shadow-lg rounded-lg overflow-hidden">
+            {/* Added container styling */}
+            <WaveformUnveilCarousel
+              images={carousel1Images}
+              width={600} // Example using percentage width
+              height={400}
+            />
+          </div>
+        )}
+        {type === "vc" && (
+          <div className="grid grid-cols-3 items-center justify-center gap-[5rem] border border-white/20 rounded-[2rem] p-8">
+            <VerticalImageCarousel
+              images={carousel1Images}
+              direction="up"
+              interval={2000}
+            />
+            <VerticalImageCarousel
+              images={carousel2Images}
+              direction="down"
+              interval={2500}
+            />
+            <VerticalImageCarousel
+              images={carousel3Images}
+              direction="up"
+              interval={1500}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
