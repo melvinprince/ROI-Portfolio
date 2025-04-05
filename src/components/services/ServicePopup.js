@@ -3,7 +3,7 @@
 import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import VerticalImageCarousel from "../VerticalImageCarousel";
-import WaveformUnveilCarousel from "../carousels/WaveformUnveilCarousel";
+import WaveformUnveilCarousel from "../WaveformUnveilCarousel";
 
 export default function ServicePopup({ service, onClose, images, type }) {
   const popupRef = useRef(null);
@@ -51,7 +51,7 @@ export default function ServicePopup({ service, onClose, images, type }) {
       >
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 rounded bg-white text-black px-4 py-2 hover:cursor-pointer hover:bg-gray-300"
+          className="absolute top-4 right-4 rounded bg-[#005555] text-white px-4 py-2 hover:cursor-pointer hover:bg-[#004444]"
         >
           Close
         </button>
@@ -59,8 +59,8 @@ export default function ServicePopup({ service, onClose, images, type }) {
           {service}
         </h1>
         {type === "ac" && (
-          <div className="max-w-4xl mx-auto shadow-lg rounded-lg">
-            {/* Added container styling */}
+          <div className="mx-auto overflow-hidden">
+            {/* Removed shadow for a cleaner look */}
             <WaveformUnveilCarousel
               images={carousel1Images}
               width={1300}
