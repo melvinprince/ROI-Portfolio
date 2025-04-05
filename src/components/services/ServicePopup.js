@@ -3,10 +3,6 @@
 import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import VerticalImageCarousel from "../VerticalImageCarousel";
-import AnimatedImageCarousel from "../imageCarouselComponent/AnimatedImageCarousel";
-import ImageCarousel from "../ImageCarousel";
-import TriangularCascadeCarousel from "../ImageCarousel";
-import CubeFlipCarousel from "../carousels/CubeFlipCarousel";
 import WaveformUnveilCarousel from "../carousels/WaveformUnveilCarousel";
 
 export default function ServicePopup({ service, onClose, images, type }) {
@@ -63,12 +59,12 @@ export default function ServicePopup({ service, onClose, images, type }) {
           {service}
         </h1>
         {type === "ac" && (
-          <div className="max-w-4xl mx-auto shadow-lg rounded-lg overflow-hidden">
+          <div className="max-w-4xl mx-auto shadow-lg rounded-lg">
             {/* Added container styling */}
             <WaveformUnveilCarousel
               images={carousel1Images}
-              width={600} // Example using percentage width
-              height={400}
+              width={1300}
+              height={600}
             />
           </div>
         )}

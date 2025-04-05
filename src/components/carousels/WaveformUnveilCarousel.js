@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const overlayRef = useRef(null);
 
   // Number of vertical slices to create a waveform effect
@@ -23,6 +24,8 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
   const handleTransition = (direction = "next") => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    // Reset load state for the upcoming image
+    setIsLoaded(false);
 
     const nextIndex = getIndex(direction);
     const overlay = overlayRef.current;
@@ -85,6 +88,8 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
           alt="Carousel Image"
           layout="fill"
           objectFit="cover"
+          priority
+          onLoad={() => setIsLoaded(true)}
         />
         {/* Overlay for waveform slices */}
         <div
@@ -97,17 +102,27 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
       <div className="mt-4 flex gap-4">
         <button
           onClick={() => handleTransition("prev")}
+          disabled={!isLoaded || isTransitioning}
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >
           Prev
         </button>
         <button
           onClick={() => handleTransition("next")}
+          disabled={!isLoaded || isTransitioning}
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >
           Next
         </button>
       </div>
+
+      {/* Global CSS override to remove unwanted image transitions */}
+      <style jsx global>{`
+        img {
+          transition: none !important;
+          transform: none !important;
+        }
+      `}</style>
     </div>
   );
 };
