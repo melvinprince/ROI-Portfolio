@@ -52,7 +52,7 @@ export default function ServicePopup({ service, onClose, images, type }) {
           onClick={handleClose}
           className="absolute top-4 right-4 rounded-full bg-[#005555] text-white text-[3rem] px-8 py-2 hover:bg-[#004444]"
         >
-          &times;
+          &times; test
         </button>
         <h1 className="text-[3rem] pt-[3rem] font-bold text-center">
           {service}
