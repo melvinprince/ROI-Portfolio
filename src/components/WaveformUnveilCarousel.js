@@ -3,6 +3,8 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
+  console.log(images);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const overlayRef = useRef(null);
@@ -130,15 +132,15 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
     <div className="flex flex-col items-center w-full h-full">
       {/* Image container */}
       <div
-        className="relative rounded-[25px] overflow-hidden shadow-xl"
+        className="relative rounded-[25px] overflow-hidden "
         style={{ width, height }}
       >
         {/* Main image, updated immediately on transition */}
         <Image
           src={images[currentIndex]}
           alt="Carousel Image"
-          layout="fill"
-          objectFit="cover"
+          fill
+          objectFit="contain"
           priority
         />
         {/* Overlay container for the mask slices */}
@@ -149,7 +151,7 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
       </div>
 
       {/* Navigation buttons placed below the image container */}
-      <div className="pt-10 flex gap-4">
+      <div className="pt-[5rem] flex gap-4">
         <button
           onClick={() => handleTransition("prev")}
           disabled={isTransitioning}

@@ -36,6 +36,13 @@ const services = [
     name: "Branding",
     link: "",
     image: "/images/services/branding_adjusted.webp",
+    type: "ac",
+    images: [
+      "/images/branding/image-1.webp",
+      "/images/branding/image-2.webp",
+      "/images/branding/image-3.webp",
+      "/images/branding/image-4.webp",
+    ],
   },
   {
     name: "Printing",
@@ -46,6 +53,15 @@ const services = [
     name: "Web Development",
     link: "",
     image: "/images/services/webDev_adjusted.webp",
+    type: "ac",
+    images: [
+      "/images/websites/image-1.webp",
+      "/images/websites/image-2.webp",
+      "/images/websites/image-3.webp",
+      "/images/websites/image-4.webp",
+      "/images/websites/image-5.webp",
+      "/images/websites/image-6.webp",
+    ],
   },
   {
     name: "App Development",

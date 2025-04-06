@@ -7,6 +7,8 @@ import VerticalImageCarousel from "../VerticalImageCarousel";
 import WaveformUnveilCarousel from "../WaveformUnveilCarousel";
 
 export default function ServicePopup({ service, onClose, images, type }) {
+  console.log(images);
+
   const popupRef = useRef(null);
 
   const total = images.length;
@@ -44,7 +46,7 @@ export default function ServicePopup({ service, onClose, images, type }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
       <div
         ref={popupRef}
-        className="relative flex h-fit w-[80vw] flex-col items-center justify-center rounded-2xl bg-[#008080] p-8"
+        className="relative flex h-fit w-[80vw] flex-col items-center justify-center rounded-2xl bg-[#008080] p-8 text-white"
       >
         <button
           onClick={handleClose}
@@ -52,17 +54,13 @@ export default function ServicePopup({ service, onClose, images, type }) {
         >
           &times;
         </button>
-        <h1 className="text-[3rem] pb-[2rem] font-bold text-center">
+        <h1 className="text-[3rem] pt-[3rem] font-bold text-center">
           {service}
         </h1>
 
         {type === "ac" && (
-          <div className="mx-auto overflow-hidden">
-            <WaveformUnveilCarousel
-              images={carousel1Images}
-              width={1300}
-              height={600}
-            />
+          <div className="mx-auto overflow-hidden pt-[5rem]">
+            <WaveformUnveilCarousel images={images} width={1200} height={550} />
           </div>
         )}
 
