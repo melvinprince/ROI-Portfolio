@@ -2,21 +2,19 @@
 
 import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
+import { createPortal } from "react-dom";
 import VerticalImageCarousel from "../VerticalImageCarousel";
 import WaveformUnveilCarousel from "../WaveformUnveilCarousel";
 
 export default function ServicePopup({ service, onClose, images, type }) {
   const popupRef = useRef(null);
-  console.log("Service", service);
 
-  // Calculate how many images per carousel.
   const total = images.length;
   const chunkSize = Math.ceil(total / 3);
   const carousel1Images = images.slice(0, chunkSize);
   const carousel2Images = images.slice(chunkSize, chunkSize * 2);
   const carousel3Images = images.slice(chunkSize * 2);
 
-  // Animate popup on mount
   useLayoutEffect(() => {
     gsap.fromTo(
       popupRef.current,
@@ -32,7 +30,6 @@ export default function ServicePopup({ service, onClose, images, type }) {
     );
   }, []);
 
-  // Animate popup on close, then call onClose
   const handleClose = () => {
     gsap.to(popupRef.current, {
       opacity: 0,
@@ -43,7 +40,7 @@ export default function ServicePopup({ service, onClose, images, type }) {
     });
   };
 
-  return (
+  const popupContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
       <div
         ref={popupRef}
@@ -51,16 +48,16 @@ export default function ServicePopup({ service, onClose, images, type }) {
       >
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 rounded bg-[#005555] text-white px-4 py-2 hover:cursor-pointer hover:bg-[#004444]"
+          className="absolute top-4 right-4 rounded-full bg-[#005555] text-white text-[3rem] px-8 py-2 hover:bg-[#004444]"
         >
-          Close
+          &times;
         </button>
         <h1 className="text-[3rem] pb-[2rem] font-bold text-center">
           {service}
         </h1>
+
         {type === "ac" && (
           <div className="mx-auto overflow-hidden">
-            {/* Removed shadow for a cleaner look */}
             <WaveformUnveilCarousel
               images={carousel1Images}
               width={1300}
@@ -68,6 +65,7 @@ export default function ServicePopup({ service, onClose, images, type }) {
             />
           </div>
         )}
+
         {type === "vc" && (
           <div className="grid grid-cols-3 items-center justify-center gap-[5rem] border border-white/20 rounded-[2rem] p-8">
             <VerticalImageCarousel
@@ -90,4 +88,8 @@ export default function ServicePopup({ service, onClose, images, type }) {
       </div>
     </div>
   );
+
+  return typeof window !== "undefined"
+    ? createPortal(popupContent, document.body)
+    : null;
 }

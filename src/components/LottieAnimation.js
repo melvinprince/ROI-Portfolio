@@ -1,45 +1,52 @@
-// LottieAnimation.js
 "use client";
 
-import React, { forwardRef, useImperativeHandle } from "react"; // Import necessary hooks
-import { useLottie } from "lottie-react";
+import dynamic from "next/dynamic";
+import { useRef } from "react";
+import { gsap } from "gsap";
 
-// Wrap component with forwardRef to receive the ref from the parent
-const LottieAnimation = forwardRef(
-  ({ animationData, autoPlay = false, loop = true }, ref) => {
-    const options = {
-      animationData: animationData,
-      loop: loop,
-      autoplay: autoPlay, // Use the prop, default to false
-      style: { height: "100%", width: "100%" },
-    };
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
-    const { View, animationControl } = useLottie(options);
+export default function LottieAnimation({ animationData }) {
+  const containerRef = useRef(null);
 
-    // Expose specific methods (play, pause) to the parent component via the ref
-    useImperativeHandle(
-      ref,
-      () => ({
-        play: () => {
-          animationControl?.play();
-        },
-        pause: () => {
-          animationControl?.pause();
-        },
-        // You can expose other methods from animationControl if needed
-        // stop: () => {
-        //   animationControl?.stop();
-        // }
-      }),
-      [animationControl]
-    ); // Dependency array includes animationControl
+  const handleMouseMove = (e) => {
+    const { clientX, clientY, currentTarget } = e;
+    const rect = currentTarget.getBoundingClientRect();
+    // Normalize mouse position within the container (0 to 1)
+    const x = (clientX - rect.left) / rect.width;
+    const y = (clientY - rect.top) / rect.height;
 
-    // Render only the View. Remove hover handlers from here.
-    return <div style={{ width: "100%", height: "100%" }}>{View}</div>;
-  }
-);
+    // Animate the container's rotation and scale based on mouse position
+    gsap.to(containerRef.current, {
+      rotation: x * 5, // rotate up to 20 degrees based on horizontal position
+      scale: 1 + y * 0.001, // scale up slightly based on vertical position
+      ease: "power3.out",
+      duration: 0.5,
+    });
+  };
 
-// Add display name for better debugging
-LottieAnimation.displayName = "LottieAnimation";
+  const handleMouseLeave = () => {
+    // Reset the container's transformation when the mouse leaves
+    gsap.to(containerRef.current, {
+      rotation: 0,
+      scale: 1,
+      ease: "power3.out",
+      duration: 0.5,
+    });
+  };
 
-export default LottieAnimation;
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-full"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Lottie
+        animationData={animationData}
+        loop={true}
+        style={{ height: "100%", width: "100%" }}
+      />
+    </div>
+  );
+}
