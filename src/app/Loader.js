@@ -1,52 +1,49 @@
 "use client";
-import { useProgress } from "@react-three/drei";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
-export default function Loader({ onLoaded }) {
-  const { progress } = useProgress();
+export default function Preloader() {
+  const [isVisible, setIsVisible] = useState(true);
+  const overlayRef = useRef(null);
 
-  // When progress reaches 100, trigger the onLoaded callback
-  if (progress >= 100) {
-    onLoaded();
-  }
+  useEffect(() => {
+    // Once the entire window (images, fonts, etc.) has loaded:
+    const handleLoad = () => {
+      // Animate the loader out using GSAP
+      const tl = gsap.timeline({
+        onComplete: () => setIsVisible(false), // after animation, remove from DOM
+      });
+
+      tl.to(overlayRef.current, {
+        duration: 0.8,
+        opacity: 0,
+        ease: "power2.out",
+      });
+    };
+
+    // If already loaded (e.g., fast refresh), run handleLoad immediately
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      // Otherwise, wait for the load event
+      window.addEventListener("load", handleLoad);
+    }
+
+    // Cleanup
+    return () => window.removeEventListener("load", handleLoad);
+  }, []);
+
+  // If the loader is done, don’t render anything
+  if (!isVisible) return null;
 
   return (
     <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: "rgba(255, 255, 255, 0.4)", // semi-transparent white
-        backdropFilter: "blur(10px)", // glass effect
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 9999,
-      }}
+      ref={overlayRef}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#008080]"
     >
-      <div style={{ textAlign: "center", color: "#000" }}>
-        <h2>Entering the ROI Verse</h2>
-        <p>{Math.floor(progress)}%</p>
-        <div
-          style={{
-            width: "300px",
-            height: "10px",
-            background: "#ddd",
-            borderRadius: "5px",
-            overflow: "hidden",
-            marginTop: "1rem",
-          }}
-        >
-          <div
-            style={{
-              width: `${progress}%`,
-              height: "100%",
-              background: "#0070f3",
-              borderRadius: "5px",
-            }}
-          />
-        </div>
+      <div className="text-white text-center">
+        <h1 className="text-4xl mb-4">Loading...</h1>
+        <p>Please wait while we load all content</p>
       </div>
     </div>
   );

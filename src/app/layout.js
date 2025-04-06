@@ -1,9 +1,13 @@
 import "./globals.css";
+import Preloader from "./Loader";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Preloader />
+        {children}
+      </body>
     </html>
   );
 }
