@@ -85,7 +85,7 @@ export default function Service({ service }) {
   return (
     <>
       <div
-        className="relative h-[30rem] w-[50rem] cursor-pointer rounded-[2rem] shadow-lg overflow-hidden border-2 border-[#008080]"
+        className="relative h-[30rem] w-[50rem] cursor-pointer rounded-[2rem] shadow-lg overflow-hidden border-2 border-[#008080] max-19xl:w-[45rem] max-19xl:h-[25rem] max-19xl:rounded-[1rem] max-17xl:w-[40rem]  max-15xl:w-[35rem] max-14xl:w-[45rem] max-14xl:h-[30rem] max-12xl:w-[40rem] max-12xl:h-[25rem] max-11xl:w-[35rem] max-8xl:w-[30rem] max-7xl:[40rem] max-5xl:w-[30rem] max-4xl:w-[30rem]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => setPopupOpen(true)}

@@ -10,30 +10,42 @@ const StarCanvas = () => {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    // Set canvas to full viewport size.
-    const setCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    const numStars = 500;
+    let stars = [];
+
+    const initStars = () => {
+      stars = Array.from({ length: numStars }).map(() => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        opacity: Math.random(),
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        increasing: Math.random() < 0.5,
+      }));
     };
+
+    // Set canvas to full screen width with a fixed aspect ratio.
+    const setCanvasSize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const width = window.innerWidth; // Fit only the screen width.
+      const aspectRatio = 9 / 16; // Change this ratio as needed.
+      const height = width * aspectRatio; // Adjust height accordingly.
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      initStars(); // Reinitialize stars with the new dimensions.
+    };
+
     setCanvasSize();
     window.addEventListener("resize", setCanvasSize);
-
-    // Create an array of twinkling stars.
-    const numStars = 500;
-    const stars = Array.from({ length: numStars }).map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5 + 0.5,
-      opacity: Math.random(),
-      twinkleSpeed: Math.random() * 0.02 + 0.005,
-      increasing: Math.random() < 0.5,
-    }));
 
     // Shooting star setup.
     let shootingStars = [];
     const createShootingStar = () => {
       const startX = Math.random() * canvas.width;
-      const startY = Math.random() * canvas.height * 0.5; // Only from the top half.
+      const startY = Math.random() * (canvas.height * 0.5); // Only from the top half.
       return {
         x: startX,
         y: startY,
@@ -80,19 +92,15 @@ const StarCanvas = () => {
       }
     };
 
-    // Draw all stars.
+    // Draw stars and shooting stars.
     const drawStars = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw twinkling stars.
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.fill();
       });
-
-      // Draw shooting stars.
       shootingStars.forEach((s) => {
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
@@ -106,11 +114,10 @@ const StarCanvas = () => {
       });
     };
 
-    // Animation control variables.
     let animationId;
     let isInView = false;
 
-    // The animation loop.
+    // Animation loop.
     const animate = () => {
       updateStars();
       updateShootingStars();
@@ -120,7 +127,7 @@ const StarCanvas = () => {
       }
     };
 
-    // Intersection Observer to check if the canvas is in view.
+    // IntersectionObserver to run the animation only when in view.
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {

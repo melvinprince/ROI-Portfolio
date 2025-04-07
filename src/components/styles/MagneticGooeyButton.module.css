@@ -11,7 +11,7 @@
 
 .button {
   /* Basic Button Styling */
-  --button-bg: #2b09eb; /* Example background color */
+  --button-bg: #008080; /* Example background color */
   --button-text-color: #ffffff;
   --button-padding-y: 1rem;
   --button-padding-x: 2rem;

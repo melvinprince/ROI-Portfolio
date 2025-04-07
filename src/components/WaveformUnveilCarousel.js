@@ -7,7 +7,15 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  // Store the displayed image dimensions and offsets.
+  const [imgSize, setImgSize] = useState({
+    width: 0,
+    height: 0,
+    offsetX: 0,
+    offsetY: 0,
+  });
   const overlayRef = useRef(null);
+  const containerRef = useRef(null);
 
   // Number of slices to create the mask
   const slicesCount = 10;
@@ -32,8 +40,38 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
     });
   };
 
+  // onLoadingComplete callback to compute the displayed image dimensions.
+  const handleImageLoad = ({ naturalWidth, naturalHeight }) => {
+    // Calculate the aspect ratios.
+    const containerAspect = width / height;
+    const imageAspect = naturalWidth / naturalHeight;
+    let displayWidth,
+      displayHeight,
+      offsetX = 0,
+      offsetY = 0;
+
+    if (imageAspect > containerAspect) {
+      // Image is wider: fill the container width.
+      displayWidth = width;
+      displayHeight = width / imageAspect;
+      offsetY = (height - displayHeight) / 2;
+    } else {
+      // Image is taller: fill the container height.
+      displayHeight = height;
+      displayWidth = height * imageAspect;
+      offsetX = (width - displayWidth) / 2;
+    }
+    setImgSize({
+      width: displayWidth,
+      height: displayHeight,
+      offsetX,
+      offsetY,
+    });
+  };
+
   const handleTransition = async (direction = "next") => {
-    if (isTransitioning) return;
+    // Ensure we have computed image dimensions.
+    if (isTransitioning || imgSize.width === 0 || imgSize.height === 0) return;
     setIsTransitioning(true);
     const nextIndex = getIndex(direction);
 
@@ -46,10 +84,10 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
       return;
     }
 
-    // Immediately update the main image to the next image
+    // Immediately update the main image to the next image.
     setCurrentIndex(nextIndex);
 
-    // Randomly pick one of the reveal variants
+    // Randomly pick one of the reveal variants.
     const variants = [
       { type: "vertical", origin: "top" },
       { type: "vertical", origin: "bottom" },
@@ -59,30 +97,34 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
     const currentVariant =
       variants[Math.floor(Math.random() * variants.length)];
 
-    // Get the overlay container for the mask
+    // Get the overlay container for the mask.
     const overlay = overlayRef.current;
     if (!overlay) return;
     overlay.innerHTML = "";
 
+    // Use the computed image dimensions.
+    const currentWidth = imgSize.width;
+    const currentHeight = imgSize.height;
+
     const slices = [];
     const tl = gsap.timeline({
       onComplete: () => {
-        // Clean up overlay after animation completes
+        // Clean up overlay after animation completes.
         overlay.innerHTML = "";
         setIsTransitioning(false);
       },
     });
 
     if (currentVariant.type === "vertical") {
-      // Create vertical slices
-      const sliceWidth = width / slicesCount;
+      // Create vertical slices.
+      const sliceWidth = currentWidth / slicesCount;
       for (let i = 0; i < slicesCount; i++) {
         const slice = document.createElement("div");
         slice.style.position = "absolute";
         slice.style.top = "0";
         slice.style.left = `${i * sliceWidth}px`;
         slice.style.width = `${sliceWidth}px`;
-        slice.style.height = `${height}px`; // full cover
+        slice.style.height = `${currentHeight}px`;
         slice.style.backgroundColor = "#008080";
         slice.style.transformOrigin = currentVariant.origin;
         slice.style.transform = "scaleY(1)";
@@ -100,14 +142,14 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
         scaleY: 0,
       });
     } else if (currentVariant.type === "horizontal") {
-      // Create horizontal slices
-      const sliceHeight = height / slicesCount;
+      // Create horizontal slices.
+      const sliceHeight = currentHeight / slicesCount;
       for (let i = 0; i < slicesCount; i++) {
         const slice = document.createElement("div");
         slice.style.position = "absolute";
         slice.style.left = "0";
         slice.style.top = `${i * sliceHeight}px`;
-        slice.style.width = `${width}px`;
+        slice.style.width = `${currentWidth}px`;
         slice.style.height = `${sliceHeight}px`;
         slice.style.backgroundColor = "#008080";
         slice.style.transformOrigin = currentVariant.origin;
@@ -130,10 +172,11 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
 
   return (
     <div className="flex flex-col items-center w-full h-full">
-      {/* Image container */}
+      {/* Fixed-size image container */}
       <div
-        className="relative rounded-[25px] overflow-hidden "
-        style={{ width, height }}
+        ref={containerRef}
+        className="relative rounded-[25px] overflow-hidden"
+        style={{ width: `${width}px`, height: `${height}px` }}
       >
         {/* Main image, updated immediately on transition */}
         <Image
@@ -142,15 +185,22 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
           fill
           objectFit="contain"
           priority
+          onLoadingComplete={handleImageLoad}
         />
-        {/* Overlay container for the mask slices */}
+        {/* Overlay container for the mask slices, matching the image dimensions */}
         <div
           ref={overlayRef}
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
+          className="absolute pointer-events-none"
+          style={{
+            width: `${imgSize.width}px`,
+            height: `${imgSize.height}px`,
+            top: `${imgSize.offsetY}px`,
+            left: `${imgSize.offsetX}px`,
+          }}
         />
       </div>
 
-      {/* Navigation buttons placed below the image container */}
+      {/* Navigation buttons */}
       <div className="pt-[5rem] flex gap-4">
         <button
           onClick={() => handleTransition("prev")}
@@ -168,7 +218,7 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
         </button>
       </div>
 
-      {/* Global CSS override to prevent any unwanted transitions */}
+      {/* Global CSS override to prevent unwanted transitions */}
       <style jsx global>{`
         img {
           transition: none !important;

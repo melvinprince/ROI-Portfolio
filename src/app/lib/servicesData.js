@@ -28,7 +28,7 @@ const services = [
     ],
   },
   {
-    name: "Digital Marketing",
+    name: "Social Media Marketing",
     link: "",
     image: "/images/services/digital_adjusted.webp",
   },
@@ -45,7 +45,7 @@ const services = [
     ],
   },
   {
-    name: "Printing",
+    name: "Printing Services",
     link: "",
     image: "/images/services/printing_adjusted.webp",
   },

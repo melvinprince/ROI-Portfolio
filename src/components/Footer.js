@@ -1,12 +1,36 @@
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 
 export default function Footer() {
+  // Contact details
+  const email = "hello@roi.qa";
+  const phone = "00974 71522528";
+
+  // Tooltip text states for email and phone copy functionality
+  const [emailTooltip, setEmailTooltip] = useState("Click to copy");
+  const [phoneTooltip, setPhoneTooltip] = useState("Click to copy");
+
+  // Copy handler which updates tooltip text upon success/failure
+  const handleCopy = (text, setTooltip) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setTooltip("Copied!");
+        setTimeout(() => setTooltip("Click to copy"), 2000);
+      })
+      .catch(() => {
+        setTooltip("Failed to copy");
+        setTimeout(() => setTooltip("Click to copy"), 2000);
+      });
+  };
+
   return (
-    <footer className="w-full px-[15rem] py-[5rem] text-white flex items-center justify-center z-[100]">
-      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 justify-between items-center w-full">
+    <footer className="w-full bg-gray-900 text-white px-8 py-12">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Logo Section */}
-        <div className="footer-section flex items-start">
-          <div className="relative w-[15rem] h-[15rem]">
+        <div className="mb-8 md:mb-0">
+          <div className="relative w-40 h-40 md:w-48 md:h-48">
             <Image
               src="/images/roi-logo.png"
               alt="ROI Logo"
@@ -16,118 +40,86 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation Links */}
-        <div className="footer-section">
-          <h2 className="mb-4 text-[2.5rem] py-[1rem] m-[1rem] leading-none">
-            Quick Links
-          </h2>
-          <ul className="space-y-3">
-            <li>
-              <a
-                href="https://roi.qa/home"
-                className="hover:underline text-[1.5rem]"
+        {/* CTA Section */}
+        <div className="mb-8 md:mb-0 text-center">
+          <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
+          <div className="space-y-4">
+            <div className="group relative inline-block">
+              <button
+                onClick={() => handleCopy(email, setEmailTooltip)}
+                className="text-xl hover:text-teal-400 transition-colors"
               >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://roi.qa/about"
-                className="hover:underline text-[1.5rem]"
+                {email}
+              </button>
+              <span className="absolute left-1/2 -translate-x-1/2 mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                {emailTooltip}
+              </span>
+            </div>
+            <div className="group relative inline-block">
+              <button
+                onClick={() => handleCopy(phone, setPhoneTooltip)}
+                className="text-xl hover:text-teal-400 transition-colors"
               >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://roi.qa/contact"
-                className="hover:underline text-[1.5rem]"
-              >
-                Contact
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://roi.qa/service"
-                className="hover:underline text-[1.5rem]"
-              >
-                Services
-              </a>
-            </li>
-          </ul>
+                {phone}
+              </button>
+              <span className="absolute left-1/2 -translate-x-1/2 mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                {phoneTooltip}
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* Social Links */}
-        <div className="footer-section">
-          <h2 className="mb-4 text-[2.5rem] py-[1rem] m-[1rem] leading-none">
-            Follow Us
-          </h2>
-          <ul className="space-y-3">
-            <li>
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline text-[1.5rem]"
-              >
-                LinkedIn
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline text-[1.5rem]"
-              >
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline text-[1.5rem]"
-              >
-                Facebook
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline text-[1.5rem]"
-              >
-                Twitter
-              </a>
-            </li>
-          </ul>
+        {/* Social Links Section */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-4">Follow Us</h2>
+          <div className="flex flex-wrap justify-center gap-6">
+            <a
+              href="https://www.linkedin.com/company/royal-orbit-innovations/posts/?feedView=all"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl hover:text-teal-400 transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://www.instagram.com/roi_marketing.qa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl hover:text-teal-400 transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.behance.net/ebrimajanneh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl hover:text-teal-400 transition-colors"
+            >
+              Behance
+            </a>
+            <a
+              href="https://www.facebook.com/roi.marketing.qa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl hover:text-teal-400 transition-colors"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://x.com/roi_qa?s=11"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xl hover:text-teal-400 transition-colors"
+            >
+              X
+            </a>
+          </div>
         </div>
+      </div>
 
-        {/* Contact & Location */}
-        <div className="footer-section">
-          <h2 className="mb-4 text-[2.5rem] py-[1rem] leading-none">
-            Contact Info
-          </h2>
-          <p className="mb-2 text-[1.5rem]">
-            <strong>Email:</strong>{" "}
-            <a href="mailto:hello@roi.qa" className="hover:underline">
-              hello@roi.qa
-            </a>
-          </p>
-          <p className="mb-4 text-[1.5rem]">
-            <strong>Phone:</strong>{" "}
-            <a href="tel:0097471522528" className="hover:underline">
-              00974 71522528
-            </a>
-          </p>
-          <h2 className="mb-2 text-[2.5rem] py-[1rem] m-[1rem] leading-none">
-            Location
-          </h2>
-          <p className="text-[1.5rem]">Al Sadd, Barwa Tower</p>
-        </div>
+      {/* Footer Bottom */}
+      <div className="mt-12 text-center text-sm text-gray-500">
+        &copy; {new Date().getFullYear()} ROI. All rights reserved.
       </div>
     </footer>
   );
