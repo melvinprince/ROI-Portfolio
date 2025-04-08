@@ -30,7 +30,7 @@ const services = [
   {
     name: "Social Media Marketing",
     link: "",
-    image: "/images/services/digital_adjusted.webp",
+    image: "/images/services/digital.webp",
   },
   {
     name: "Branding",

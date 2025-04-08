@@ -41,7 +41,7 @@ export default function ServicesContent() {
   }, []);
 
   return (
-    <div className="text-white" ref={containerRef}>
+    <div className="text-white " ref={containerRef}>
       <h1 className="text-[3rem] pb-[5rem]">
         <ScrambleTextOnHover text="OUR SERVICES" />
       </h1>

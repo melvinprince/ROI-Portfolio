@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Footer() {
   const email = "hello@roi.qa";
-  const phone = "00974 71522528";
+  const phone = "+974 71522528";
 
   const [emailTooltip, setEmailTooltip] = useState("Click to copy");
   const [phoneTooltip, setPhoneTooltip] = useState("Click to copy");
@@ -23,7 +23,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full px-8 py-12 backdrop-blur-md">
+    <div className="w-full px-8 py-12 backdrop-blur-[1px] flex flex-col justify-center items-center bg-transparent">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between text-white">
         {/* Logo Section */}
         <div className="mb-8 md:mb-0 flex-shrink-0">
@@ -118,6 +118,6 @@ export default function Footer() {
       <div className="mt-12 text-center text-sm text-gray-500">
         &copy; {new Date().getFullYear()} ROI. All rights reserved.
       </div>
-    </footer>
+    </div>
   );
 }
