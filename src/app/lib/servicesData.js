@@ -5,9 +5,9 @@ const services = [
     image: "/images/services/media.webp",
     type: "ac",
     images: [
-      "/images/mediaprod/image-1.webp",
-      "/images/mediaprod/image-2.webp",
-      "/images/mediaprod/image-3.webp",
+      "/images/mediaProduction/image-1.webp",
+      "/images/mediaProduction/image-2.webp",
+      "/images/mediaProduction/image-3.webp",
     ],
   },
   {
