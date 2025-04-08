@@ -41,16 +41,16 @@ export default function ServicesContent() {
   }, []);
 
   return (
-    <div className="text-white " ref={containerRef}>
+    <div className="h-auto text-white " ref={containerRef}>
       <h1 className="text-[3rem] pb-[5rem]">
         <ScrambleTextOnHover text="OUR SERVICES" />
       </h1>
       <div className="grid grid-cols-3 gap-[2rem] place-items-center max-14xl:grid-cols-2 max-7xl:grid-cols-1">
         {services.map((item, index) => (
           <div className="card-wrapper" key={index}>
-            <div className="service-card">
-              <Service service={item} />
-            </div>
+            {/* <div className="service-card"> */}
+            <Service service={item} />
+            {/* </div> */}
           </div>
         ))}
       </div>

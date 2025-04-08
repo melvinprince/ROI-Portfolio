@@ -12,14 +12,30 @@ export default function VerticalImageCarousel({
   const total = images.length;
   const imageHeight = 200; // Each image's height in px
   const gap = 50; // Gap between images in px
-  const effectiveHeight = imageHeight + gap; // Height + gap for scrolling
-  const visibleCount = 3; // Number of images visible at a time
+  const [visibleCount, setVisibleCount] = useState(3); // Number of images visible at a time
 
-  // Pause the auto-scroll when hovering over the carousel
+  // Update visibleCount on window resize.
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 700) {
+        setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Calculate effectiveHeight for scrolling.
+  const effectiveHeight = imageHeight + gap;
+
+  // Pause the auto-scroll when hovering over the carousel.
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
 
-  // Auto-update the currentIndex at the given interval when not paused.
+  // Auto-update currentIndex at the given interval when not paused.
   useEffect(() => {
     if (isPaused) return; // Skip updating when hovered
 
@@ -33,7 +49,7 @@ export default function VerticalImageCarousel({
     return () => clearInterval(timer);
   }, [direction, interval, total, isPaused]);
 
-  // Set the container height so exactly three images (and the in-between gaps) are visible.
+  // Set the container height so exactly visibleCount images (and the gaps) are shown.
   const containerHeight = visibleCount * imageHeight + (visibleCount - 1) * gap;
 
   // Nested component for an image with a tooltip following the cursor.
@@ -74,7 +90,7 @@ export default function VerticalImageCarousel({
               top: tooltipPos.y + 10,
               pointerEvents: "none",
             }}
-            className="text-white text-[1rem] text-no bg-[#008080] bg-opacity-50 px-2 py-1 rounded-full"
+            className="text-white text-[1rem] bg-[#008080] bg-opacity-50 px-2 py-1 rounded-full"
           >
             View Project
           </div>

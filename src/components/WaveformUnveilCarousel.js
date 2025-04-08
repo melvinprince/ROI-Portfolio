@@ -171,7 +171,7 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-full">
+    <div className="flex flex-col items-center w-full h-full max-14xl:max-w-[80rem] max-12xl:w-[70rem] max-11xl:w-[60rem] max-9xl:w-[55rem] max-8xl:w-[50rem] max-7xl:w-[45rem] max-4xl:w-[20rem] max-5xl:h-[30rem] max-5xl:w-[40rem] max-14xl:h-[50rem] max-12xl:h-[40rem] max-11xl:h-[35rem] max-9xl:h-[30rem] overflow-hidden">
       {/* Fixed-size image container */}
       <div
         ref={containerRef}
@@ -186,6 +186,7 @@ const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
           objectFit="contain"
           priority
           onLoadingComplete={handleImageLoad}
+          className="max-14xl:w-[80rem] max-14xl:h-[50rem]"
         />
         {/* Overlay container for the mask slices, matching the image dimensions */}
         <div

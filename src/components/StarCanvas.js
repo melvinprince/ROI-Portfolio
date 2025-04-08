@@ -27,15 +27,13 @@ const StarCanvas = () => {
     // Set canvas to full screen width with a fixed aspect ratio.
     const setCanvasSize = () => {
       const dpr = window.devicePixelRatio || 1;
-      const width = window.innerWidth; // Fit only the screen width.
-      const aspectRatio = 9 / 16; // Change this ratio as needed.
-      const height = width * aspectRatio; // Adjust height accordingly.
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      initStars(); // Reinitialize stars with the new dimensions.
+      initStars();
     };
 
     setCanvasSize();
@@ -166,6 +164,8 @@ const StarCanvas = () => {
         top: 0,
         left: 0,
         zIndex: -1,
+        width: "100%",
+        height: "100%",
       }}
     />
   );

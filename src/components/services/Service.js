@@ -8,78 +8,30 @@ import ServicePopup from "./ServicePopup";
 
 export default function Service({ service }) {
   const [popupOpen, setPopupOpen] = useState(false);
-  const leftRef = useRef(null);
-  const rightRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
   const overlayRef = useRef(null);
-  const textRef = useRef(null);
+  const imageOverlayRef = useRef(null);
 
   useLayoutEffect(() => {
-    gsap.set(textRef.current, { opacity: 0, scale: 0.8 });
-    gsap.set(overlayRef.current, { opacity: 0 });
+    gsap.set(imageOverlayRef.current, { y: "100%" });
   }, []);
 
   const handleMouseEnter = () => {
-    gsap.killTweensOf([
-      leftRef.current,
-      rightRef.current,
-      overlayRef.current,
-      textRef.current,
-    ]);
-
-    gsap
-      .timeline()
-      .to(
-        leftRef.current,
-        { x: "-50%", filter: "blur(5px)", duration: 0.5, ease: "power2.out" },
-        0
-      )
-      .to(
-        rightRef.current,
-        { x: "50%", filter: "blur(5px)", duration: 0.5, ease: "power2.out" },
-        0
-      )
-      .to(
-        overlayRef.current,
-        { opacity: 0.4, duration: 0.5, ease: "power2.out" },
-        0
-      )
-      .to(
-        textRef.current,
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.3"
-      );
+    setHovered(true);
+    gsap.to(imageOverlayRef.current, {
+      y: "0%",
+      duration: 0.6,
+      ease: "power2.out",
+    });
   };
 
   const handleMouseLeave = () => {
-    gsap.killTweensOf([
-      leftRef.current,
-      rightRef.current,
-      overlayRef.current,
-      textRef.current,
-    ]);
-
-    gsap
-      .timeline()
-      .to(
-        textRef.current,
-        { opacity: 0, scale: 0.8, duration: 0.5, ease: "power2.out" },
-        0
-      )
-      .to(
-        overlayRef.current,
-        { opacity: 0, duration: 0.5, ease: "power2.out" },
-        0
-      )
-      .to(
-        leftRef.current,
-        { x: "0%", filter: "blur(0px)", duration: 0.5, ease: "power2.out" },
-        "-=0.3"
-      )
-      .to(
-        rightRef.current,
-        { x: "0%", filter: "blur(0px)", duration: 0.5, ease: "power2.out" },
-        "-=0.3"
-      );
+    setHovered(false);
+    gsap.to(imageOverlayRef.current, {
+      y: "100%",
+      duration: 0.6,
+      ease: "power2.out",
+    });
   };
 
   return (
@@ -90,40 +42,36 @@ export default function Service({ service }) {
         onMouseLeave={handleMouseLeave}
         onClick={() => setPopupOpen(true)}
       >
-        <div
-          ref={leftRef}
-          className="absolute top-0 left-0 w-1/2 h-full overflow-hidden"
-        >
-          <Image
-            src={service.image}
-            alt=""
-            fill
-            className="object-cover object-left scale-125"
-          />
-        </div>
-
-        <div
-          ref={rightRef}
-          className="absolute top-0 left-[50%] w-1/2 h-full overflow-hidden"
-        >
-          <Image
-            src={service.image}
-            alt=""
-            fill
-            className="object-cover object-right scale-125"
-          />
-        </div>
-
-        <div
-          ref={overlayRef}
-          className="absolute inset-0 bg-black pointer-events-none z-[5]"
+        {/* Default Blurred Background Image */}
+        <Image
+          src={service.image}
+          alt=""
+          fill
+          className="object-cover scale-105 transition-all duration-500"
         />
 
-        <h2
-          ref={textRef}
-          className="absolute inset-0 flex justify-center items-center text-[3rem] text-white z-10"
+        {/* Slide-up Overlay Image from service.images[0] */}
+        <div
+          ref={imageOverlayRef}
+          className="absolute inset-0 z-10 overflow-hidden"
         >
-          <ScrambleTextOnHover text={service.name} />
+          <Image
+            src={service.images?.[0] || service.image}
+            alt=""
+            fill
+            className="object-cover scale-105"
+          />
+        </div>
+
+        {/* Optional dark overlay */}
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 bg-black/30 pointer-events-none z-[15]"
+        />
+
+        {/* Centered Text */}
+        <h2 className="absolute inset-0 flex justify-center items-center text-[3rem] text-white z-[20] font-extrabold transition-all duration-300 text-center max-6xl:text-[2.5rem]">
+          {hovered ? "View More" : service.name}
         </h2>
       </div>
 
@@ -132,6 +80,8 @@ export default function Service({ service }) {
           service={service.name}
           images={service.images}
           type={service.type}
+          text={service.text}
+          innerImage={service.innerImage}
           onClose={() => setPopupOpen(false)}
         />
       )}
