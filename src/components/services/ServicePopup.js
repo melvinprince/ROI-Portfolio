@@ -108,7 +108,7 @@ export default function ServicePopup({
             <div className="relative mt-8 md:mt-0 rounded-[25px] w-full md:w-1/2 aspect-video">
               <Image
                 src={images[0]}
-                alt=""
+                alt="Service Image"
                 className="object-cover scale-105 transition-all duration-300"
                 fill
               />

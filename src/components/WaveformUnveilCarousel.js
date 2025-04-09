@@ -3,8 +3,6 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 const WaveformUnveilCarousel = ({ images, width = 1000, height = 600 }) => {
-  console.log(images);
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   // Store the displayed image dimensions and offsets.

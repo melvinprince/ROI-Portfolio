@@ -45,7 +45,7 @@ export default function Service({ service }) {
         {/* Default Blurred Background Image */}
         <Image
           src={service.image}
-          alt=""
+          alt="Service Image"
           fill
           className="object-cover scale-105 transition-all duration-500"
         />
@@ -57,7 +57,7 @@ export default function Service({ service }) {
         >
           <Image
             src={service.images?.[0] || service.image}
-            alt=""
+            alt="Service Image"
             fill
             className="object-cover scale-105"
           />
