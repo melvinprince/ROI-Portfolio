@@ -1,39 +1,26 @@
 {
   "pages": {
-    "/not-found": [
-      "static/chunks/webpack-ea41b1804ade882a.js",
-      "static/chunks/4bd1b696-699ef404c7d2b90a.js",
-      "static/chunks/684-f9e5768b5faee0c3.js",
-      "static/chunks/main-app-d07a0f8ae1ca883e.js",
-      "static/chunks/app/not-found-40818234aa4cc2e8.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack-ea41b1804ade882a.js",
-      "static/chunks/4bd1b696-699ef404c7d2b90a.js",
-      "static/chunks/684-f9e5768b5faee0c3.js",
-      "static/chunks/main-app-d07a0f8ae1ca883e.js",
-      "static/chunks/app/_not-found/page-b72775331b0d468e.js"
-    ],
     "/layout": [
-      "static/chunks/webpack-ea41b1804ade882a.js",
-      "static/chunks/4bd1b696-699ef404c7d2b90a.js",
-      "static/chunks/684-f9e5768b5faee0c3.js",
-      "static/chunks/main-app-d07a0f8ae1ca883e.js",
-      "static/css/5cc847b6bcfc60c7.css",
-      "static/chunks/c15bf2b0-632a50f1802a0b14.js",
-      "static/chunks/802-18bde829af566d72.js",
-      "static/chunks/app/layout-d6a8bed0acd8aa09.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
     ],
     "/page": [
-      "static/chunks/webpack-ea41b1804ade882a.js",
-      "static/chunks/4bd1b696-699ef404c7d2b90a.js",
-      "static/chunks/684-f9e5768b5faee0c3.js",
-      "static/chunks/main-app-d07a0f8ae1ca883e.js",
-      "static/css/132054e7664e9f9e.css",
-      "static/chunks/c15bf2b0-632a50f1802a0b14.js",
-      "static/chunks/802-18bde829af566d72.js",
-      "static/chunks/995-faf0eee6d869fe52.js",
-      "static/chunks/app/page-a79b4968b6e311ce.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
+    ],
+    "/manifest.webmanifest/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/manifest.webmanifest/route.js"
     ]
   }
 }

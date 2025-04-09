@@ -64,7 +64,7 @@ export default function Section1Text({ isLoaded }) {
 
         {/* Headline */}
         <h1
-          className="text-[4rem] pb-[1.5rem] max-17xl:text-[3.5rem] max-15xl:text-[2.5rem]"
+          className="text-[3rem] pb-[1.5rem] max-15xl:text-[2.5rem]"
           ref={headingRef}
         >
           <ScrambleTextOnHover text="Delivering Success Through Innovations" />

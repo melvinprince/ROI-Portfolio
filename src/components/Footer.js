@@ -110,7 +110,7 @@ export default function Footer() {
               Facebook
             </a>
             <a
-              href="#"
+              href="https://x.com/roi_qa?s=11"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-teal-400 transition"
