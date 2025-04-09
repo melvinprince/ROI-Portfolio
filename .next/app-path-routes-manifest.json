@@ -1,8 +1,8 @@
 {
-  "/favicon.ico/route": "/favicon.ico",
   "/manifest.webmanifest/route": "/manifest.webmanifest",
   "/robots.txt/route": "/robots.txt",
   "/sitemap.xml/route": "/sitemap.xml",
+  "/favicon.ico/route": "/favicon.ico",
   "/opengraph-image.png/route": "/opengraph-image.png",
   "/_not-found/page": "/_not-found",
   "/page": "/"
