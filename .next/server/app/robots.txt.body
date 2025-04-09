@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://portfolio.roi.qa
+Sitemap: https://portfolio.roi.qa/sitemap.xml
